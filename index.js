@@ -28,7 +28,7 @@ function showCommits(el) {
   const repository = el.dataset.repository;
   let query = `https://api.github.com/repos/${username}/${repository}/commits`;
   $.get(query)
-      .dont(displayCommits)
+      .done(displayCommits)
       .fail(displayError);
 };
 
