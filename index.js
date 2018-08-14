@@ -23,7 +23,29 @@ function displayRepos(data) {
   }).join(""));
 };
 
+function showCommits(el) {
+  const username = el.dataset.owner;
+  const repository = el.dataset.repository;
+  let query = `https://api.github.com/repos/${username}/${repository}/commits`;
+  $.get(query)
+      .dont(displayCommits)
+      .fail(displayError);
+};
 
+function displayCommits(data) {
+  $("#details").html(data.map(commit=> {
+    return (`<div>
+                <img src="${commit.avatar_url}" width="100px"><br>
+                <h4>${commit.commit.author.name} - (${commit.author.login})</h4>
+                <p>${commit.sha}</p>
+              </div>`);
+  }).join(""));
+};
+
+function displayError() {
+  const error = "I'm sorry, there has been an error. Please try again."
+    $("#errors").html(error);
+};
 
 
 
